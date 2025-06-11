@@ -25,3 +25,13 @@ rules:
 
 ignore:
   - .github
+
+reunite:
+  jobs:
+    - path: 'monitoring/x-security-workflow.yaml'
+      agent: respect
+      trigger:
+        event: schedule
+        interval: 1m
+      inputs:
+        API_KEY: '{{ process.env.X_SECURITY_API_KEY }}'

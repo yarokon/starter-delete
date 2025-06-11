@@ -1,0 +1,14 @@
+stepId: revealForceProphecyStep
+description: You're close. The Force whispers its secret.
+x-security:
+  - scheme:
+      type: http
+      scheme: digest
+    values:
+      username: $steps.completeBearerTrialStep.outputs.username
+      password: $steps.completeBearerTrialStep.outputs.password
+x-operation:
+  method: get
+  url: https://x-security.redocly.app/api/secret
+successCriteria:
+  - condition: $statusCode == 200

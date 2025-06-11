@@ -1,0 +1,129 @@
+openapi: 3.1.0
+info:
+  title: The X-Security Path
+  version: 1.0.0
+  license:
+    url: https://opensource.org/licenses/MIT
+    name: MIT
+servers:
+  - url: https://x-security.redocly.app/api
+    description: x-security API
+tags:
+  - name: x-security
+    description: x-security
+paths:
+  /api-key-auth:
+    get:
+      tags:
+        - x-security
+      summary: Initiate padawan access
+      description: Begin your training. Use basic credentials to unlock the first gate.
+      operationId: initiatePadawanAccess
+      responses:
+        '200':
+          description: Successful authentication
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+                    example: username
+                  password:
+                    type: string
+                    example: password
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+      security:
+        - apiKeyAuth: []
+  /basic-auth:
+    get:
+      tags:
+        - x-security
+      summary: Enter basic protocol
+      description: >-
+        With new knowledge, use basic credentials from previous step to move
+        deeper into the system.
+      operationId: enterBasicProtocol
+      responses:
+        '200':
+          description: Successful authentication
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  format:
+                    type: string
+                    example: JWT
+                  token:
+                    type: string
+                    example: >-
+                      eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiSm9obiBEb2UifQ.LlTGHPZRXbci-y349jXXN0byQniQQqwKGybzQCFIgY0
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+      security:
+        - basicAuth: []
+  /bearer-auth:
+    get:
+      tags:
+        - x-security
+      summary: Complete bearer trial
+      description: Prove your strength by using bearer-level credentials.
+      operationId: completeBearerTrial
+      responses:
+        '200':
+          description: Successful authentication
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+                    example: username
+                  password:
+                    type: string
+                    example: password
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+      security:
+        - bearerAuth: []
+  /secret:
+    get:
+      tags:
+        - x-security
+      summary: Reveal force prophecy
+      description: You're close. The Force whispers its secret.
+      operationId: revealForceProphecy
+      responses:
+        '200':
+          description: Secret sentence
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Secret sentence.
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+      security:
+        - digestAuth: []
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: query
+      name: api-key
+    basicAuth:
+      type: http
+      scheme: basic
+    bearerAuth:
+      type: http
+      scheme: bearer
+    digestAuth:
+      type: http
+      scheme: digest
+  responses:
+    UnauthorizedError:
+      description: Unauthorized.
